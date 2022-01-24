@@ -1,0 +1,267 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Θάλασσα Radio - Μας ακούτε ζωντανά | Το Web radio που θέλετε να ακούσετε είναι εδώ!</title>
+<meta property='og:title' content='Θάλασσα Radio - Μας ακούτε ζωντανά'/>
+<meta property='og:description' content='Το Web radio που θέλετε να ακούσετε είναι εδώ!'/>
+<meta property='og:url' content='https://thalassaradio.gq/'/>
+<meta property='og:site_name' content='Θάλασσα Radio'/>
+<meta property='og:image' content='/ourplayer/logo.png'/>
+
+
+<link rel="stylesheet" type="text/css" href="/ourplayer/jplayer.nrg.css" />
+<link href='https://fonts.googleapis.com/css?family=Ubuntu+Condensed&subset=latin,greek-ext' rel='stylesheet' type='text/css'>
+<link href="/ourplayer/nrgcss.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="/ourplayer/jquery.jplayer.min.js"></script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function(){
+$("#jquery_jplayer_1").jPlayer({
+swfPath: "//cdnjs.cloudflare.com/ajax/libs/jplayer/2.7.1/jquery.jplayer/Jplayer.swf",
+verticalVolume: true,
+ready: function () {
+$(this).jPlayer("setMedia", {
+mp3: "http://stream.zeno.fm/5ye7xw94tk8uv" }).jPlayer("play");
+},
+supplied: "mp3",
+solution:"html"
+});
+
+
+
+
+jQuery(document).ready(function($){
+var deviceAgent = navigator.userAgent.toLowerCase();
+var agentID = deviceAgent.match(/(iphone|ipod|ipad)/);
+if (agentID) {
+
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.pause, function(event) {
+$(this).jPlayer("clearMedia");
+$(this).jPlayer("setMedia", {
+mp3: "http://stream.zeno.fm/5ye7xw94tk8uv.pls"
+});
+});
+} else {
+$("#jquery_jplayer_1").bind($.jPlayer.event.pause, function(event) {
+$(this).jPlayer("clearMedia");
+$(this).jPlayer("setMedia", {
+mp3: "http://stream.zeno.fm/5ye7xw94tk8uv.pls"
+});
+});
+}
+});
+
+
+
+
+
+
+
+
+});
+//]]>
+</script>
+
+
+<script>
+
+
+var rdsload = [];
+var texts = [];
+var rdslines;
+var $loaddata;
+var thumbimage;
+var song = "";
+var artist = "";
+var timestamp = parseInt(new Date().getTime().toString().substring(0, 10));
+var textsstring = '';
+var rdsloadstring;
+
+
+
+
+
+
+function loadrds() {
+$.ajax( {
+url : '/live/rdslive.php">', // your ajax file
+type : 'get',
+success : function( data ) {
+var rdslines = data.split(/\n/);
+for (var i=0; i < rdslines.length; i++) {
+if (/\S/.test(rdslines[i])) {
+texts.push($.trim(rdslines[i]));
+}
+}
+artist = texts[1];
+song = texts[2];
+// rdsload = artist + ' - ' + song;
+$('#songname').hide().append(song).fadeIn();
+$('#artistname').hide().append(artist).fadeIn();
+}
+});
+
+
+};
+
+
+
+
+/* ***************************************************************** */
+/* ***************************************************************** */
+/* ***************************************************************** */
+/* ***************************************************************** */
+/* ***************************************************************** */
+/* ***************************************************************** */
+/* ***************************************************************** */
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+
+
+$.ajaxSetup({ cache: false });
+
+
+loadrds();
+
+
+//the player loooop+
+counter = 0;
+var refreshId = setInterval(function () {
+
+
+$.ajax( {
+url : '/live/rdslive.php', // your ajax file
+type : 'get',
+success : function( data3 ) {
+
+
+texts = [];
+rdslines = data3.split(/\n/);
+for (var i=0; i < rdslines.length; i++) {
+if (/\S/.test(rdslines[i])) {
+texts.push($.trim(rdslines[i]));
+}
+}
+artist = texts[1];
+song = texts[2];
+textsstring = texts.join();
+rdsloadstring = rdsload.join();
+console.log('first three' + artist.substr(0,3));
+if ( song.substr(0,3) == 'DLK') {
+console.log('sweeeeper');
+}
+else
+{
+$('#songname').fadeOut().empty().append(song).hide().fadeIn();
+$('#artistname').fadeOut().empty().append(artist).hide().fadeIn();
+
+
+}
+
+
+}
+});
+rdsload = texts;
+counter++;
+}, 15*1000);
+
+
+});
+
+
+</script>
+</head>
+
+
+<body>
+
+
+<div id="wrap">
+<div id="header">
+
+
+<div id="blktop">
+<div id="logo"><a href="https://thalassaradio.gq" target="_blank"><img src="/live/logo.png"/></a></div> <!-- end logo-->
+
+
+<div id="playerarea">
+<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+
+
+<div id="jp_container_1" class="jp-audio">
+<div class="jp-type-single">
+<div class="jp-gui jp-interface">
+<ul class="jp-controls">
+<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+</ul>
+<div class="jp-volume-bar">
+<div class="jp-volume-bar-value"></div>
+</div>
+</div>
+</div>
+</div>
+
+
+</div><!-- controls -->
+<div id="playingnowinfo">
+<div id="nowplaying">Παίζει Τώρα:</div>
+
+<script> $(document).ready(function() { $("#songname").load("/live/rdslive.php"); var refreshId = setInterval(function() { $("#songname").load("/live/rdslive.php"); }, 15000); $.ajaxSetup({ cache: false });});</script> <div class="playmisc">ΚΑΛΛΙΤΕΧΝΗΣ - ΤΙΤΛΟΣ:</div><div id="songname">
+
+
+
+</div>
+<div class="playmisc"></div><div id="artistname"></div>
+
+
+</div>
+
+
+<div id="shareit">
+<div class="playmisc">SHARE:</div>
+<br />
+<div id="sharebuttons">
+
+
+</div><!--end buttons-->
+</div>
+
+
+</div><!-- end black top -->
+
+
+</div><!-- end header-->
+
+
+<div id="footer">
+
+
+<div id="footerleft">
+<span style="margin-right:10px;"><font color="#f00">©: 2021 Θάλασσα Radio</font> </span> <span style="margin-right:10px;font-weight:bold;font-size:16px;"><!--Κατέβασε το app </span> <a style="margin-right:10px;color:#f47300;font-weight:bold;font-size:16px;" href="https://play.google.com/store/apps/details?id=gr.radio.blackman" target="_blank"> Android </a> <a style="color:#f47300;font-weight:bold;font-size:16px;" href="https://itunes.apple.com/us/app/radio-blackman/id701477182?l=el&ls=1&mt=8" target="_blank"> iphone IOS </a>-->
+</div>
+</div> <!-- end footer -->
+<!--/* OpenX iFrame Tag v2.8.6-rc2 */-->
+
+
+
+
+</div><!-- end wrap -->
+
+
+</body>
+</html>
